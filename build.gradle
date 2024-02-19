@@ -1,0 +1,71 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.2'
+	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'hello'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	//테스트에서 lombok 사용
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+
+	// jasypt-spring-boot-starter
+	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
+
+	// thumbnailator
+	implementation 'net.coobird:thumbnailator:0.4.20'
+
+	// jsoup
+	implementation 'org.jsoup:jsoup:1.15.3'
+
+	// json
+	implementation 'org.json:json:20231013'
+
+	// commons-lang3
+	implementation 'org.apache.commons:commons-lang3:3.12.0'
+
+	// javax.mail
+	implementation 'com.sun.mail:javax.mail:1.6.2'
+
+	// commons-io
+	implementation 'commons-io:commons-io:2.8.0'
+
+	// log4jdbc-log4j2-jdbc4.1
+	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+
+	// Spring Boot dependencies
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+
+	// Spring Boot DevTools
+	runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

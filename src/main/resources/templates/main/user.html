@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head></head>
+<body>
+  <a>안녕</a>
+<form method="post" id="study" th:action="@{/main/userImpo.do}">
+  <div><input type="text" name="userName" placeholder="이름을 적으시오."></div>
+  <div><input type="text" name="address" placeholder="주소를 적으시오."></div>
+  <div><input type="int" name="phoneNo" placeholder="번호를 적으시오."></div>
+  <button type="submit">확인</button>
+</form>
+</body>
+</html>
