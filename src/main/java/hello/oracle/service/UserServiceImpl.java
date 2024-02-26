@@ -30,7 +30,8 @@ public class UserServiceImpl implements UserService{
 
     }
     @Override
-    public UserDto getUser() {
-        return userMapper.selectUser();
+    public UserDto getUserById(int userId) {
+        // 사용자 조회 로직
+        return userMapper.selectUser(userId);
     }
 }

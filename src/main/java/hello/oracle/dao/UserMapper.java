@@ -8,5 +8,5 @@ import java.util.Map;
 @Mapper
 public interface UserMapper {
   public int insertUser(UserDto user);
-  public UserDto selectUser();
+  public UserDto selectUser(int userId);
 }

@@ -1,7 +1,6 @@
 package hello.oracle.controller;
 
 import hello.oracle.dto.UserDto;
-import hello.oracle.service.UserService;
 import hello.oracle.service.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @RequiredArgsConstructor
 @Controller
-public class MvcController {
+public class UserController {
 
   private final UserServiceImpl userService;
 
@@ -28,8 +27,8 @@ public class MvcController {
     return "main/userImpo";
   }
   @GetMapping("main/mypage.form")
-  public String mypageForm(Model model) {
-    UserDto user = userService.getUser();
+  public String mypageForm(Model model, int userId) {
+    UserDto user = userService.getUserById(userId);
     model.addAttribute("user", user);
     return "main/mypage";
   }

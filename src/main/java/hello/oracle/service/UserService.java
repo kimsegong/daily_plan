@@ -8,5 +8,5 @@ import java.util.Map;
 
 public interface UserService {
     public void join(HttpServletRequest request, HttpServletResponse response);
-    public UserDto getUser();
+    public UserDto getUserById(int userId);
 }
