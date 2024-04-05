@@ -9,4 +9,5 @@ import java.util.Map;
 public interface UserService {
     public void join(HttpServletRequest request, HttpServletResponse response);
     public UserDto getUserById(int userId);
+    public UserDto modifyUser(int userId);
 }

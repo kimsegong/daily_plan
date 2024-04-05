@@ -34,4 +34,9 @@ public class UserServiceImpl implements UserService{
         // 사용자 조회 로직
         return userMapper.selectUser(userId);
     }
+
+    @Override
+    public UserDto modifyUser(int userId){
+        return ;
+    }
 }
