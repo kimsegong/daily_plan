@@ -16,10 +16,7 @@ public class UserController {
 
   private final UserServiceImpl userService;
 
-  @GetMapping(value={"/", "/main/user.do"})
-  public String main() {
-    return "main/user";
-  }
+
 
   @PostMapping("/main/userImpo.do")
   public String join(HttpServletRequest request, HttpServletResponse response) {

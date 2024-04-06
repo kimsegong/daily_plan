@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/header::head('한반도 투어')}"></head>
+<style>
+</style>
+<body>
+   <div th:replace="~{layout/header::header}"></div>
+
+   <ul class="nav flex-column">
+      <li class="nav-item">
+         <a class="nav-link active" aria-current="page" href="#">달력</a>
+      </li>
+      <li class="nav-item">
+         <a class="nav-link" href="#">ToDoList</a>
+      </li>
+      <li class="nav-item">
+         <a class="nav-link" href="#">설정</a>
+      </li>
+      <li class="nav-item">
+         <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+      </li>
+   </ul>
+   
+   <script th:inline="javascript">
+
+   </script>
+   
+   
+   <div th:replace="~{layout/footer::footer}"></div>
+</body>
+</html>

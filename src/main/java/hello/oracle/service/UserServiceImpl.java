@@ -35,8 +35,5 @@ public class UserServiceImpl implements UserService{
         return userMapper.selectUser(userId);
     }
 
-    @Override
-    public UserDto modifyUser(int userId){
-        return ;
-    }
+
 }
