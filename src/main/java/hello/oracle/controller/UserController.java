@@ -9,21 +9,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+@RequestMapping(value="/user")
 @RequiredArgsConstructor
 @Controller
 public class UserController {
 
   private final UserServiceImpl userService;
 
-
-
-  @PostMapping("/main/userImpo.do")
+  @GetMapping("/login.do")
   public String join(HttpServletRequest request, HttpServletResponse response) {
     userService.join(request, response);
-    return "main/userImpo";
+    return "user/login";
   }
-  @GetMapping("main/mypage.form")
+  @GetMapping("/mypage.form")
   public String mypageForm(Model model, int userId) {
     UserDto user = userService.getUserById(userId);
     model.addAttribute("user", user);

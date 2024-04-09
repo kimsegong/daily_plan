@@ -9,13 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDto {
+public class BoardDto {
+    private int boardNo;
     private int userNo;
-    private String userEmail;
-    private String userPw;
-    private String userName;
-    private String userphone;
-    private int userRole;
+    private String title;
+    private String content;
     private String createAt;
     private String updateAt;
 }

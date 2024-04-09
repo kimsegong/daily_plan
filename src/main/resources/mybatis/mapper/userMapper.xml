@@ -6,8 +6,28 @@
 <mapper namespace="hello.oracle.dao.UserMapper">
 
   <insert id="insertUser" parameterType="UserDto">
-    INSERT INTO USER_T(USER_ID, USER_NAME, ADDRESS, PHONE_NO) VALUES(USER_SEQ.NEXTVAL, #{userName, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR}, #{phoneNo, jdbcType=INTEGER})
+    INSERT INTO USER_T (USER_NO, USER_EMAIL, USER_PW, USER_NAME, USER_PHONE, USER_ROLE, CREATE_AT, UPDATE_AT
+    )VALUES(
+    USER_SEQ.NEXTVAL,
+    #{userEmail, jdbcType=VARCHAR},
+    #{userPw, jdbcType=VARCHAR},
+    #{userName, jdbcType=INTEGER},
+    #{userPhone, jdbcType=INTEGER},
+    1,
+    TO_CHAR(SYSDATE,'YYYY/MM/DD'),
+    TO_CHAR(SYSDATE,'YYYY/MM/DD')
+    )
   </insert>
+
+  <select id="getUser" parameterType="Map" resultType="UserDto">
+    SELECT USER_NO, USER_EMAIL, USER_PW, USER_NAME, USER_PHONE, CREATE_AT, UPDATE_AT
+    FROM USER_T
+    <where>
+      <if test="userEmail != null">USER_EMAIL = #{userEmail}</if>
+      <if test="userPw != null">AND USER_PW = #{userPw}</if>
+      <if test="userNo != null">AND USER_NO = #{userNo}</if>
+    </where>
+  </select>
 
   <select id="selectUser" parameterType="Map" resultType="UserDto">
     SELECT USER_ID, USER_NAME, ADDRESS, PHONE_NO
