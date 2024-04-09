@@ -22,6 +22,7 @@
 
 </head>
 <style>
+
 </style>
 <body id="body">
  <div th:fragment="header" class="header_wrap">
@@ -35,10 +36,7 @@
                      </a>
                  </div>
              </div>
-             <!-- 검색바 -->
-             <div class="col-8"  style="height: 140px;">
-             </div>
-             <!-- 아이콘 -->
+             <a th:href="@{/user/login.do}" style="font-size: 20px; text-align: right; display: block; float: right;">로그인</a>
          </div>
      </div>
      <!-- 네비게이션 바 -->

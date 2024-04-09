@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{layout/header::head('Daily_Plan 로그인')}"></head>
+<style>
+    /* 텍스트 깜빡임 */
+    @keyframes blink-effect { 50% { opacity: 0; } }
+    .blink {
+        animation: blink-effect 1s step-end infinite;
+        }
+</style>
+<body style="background-color: #FCB9B2;">
+
+<div class="main_wrap">
+
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-1">
+            </div>
+            <div class="col-10">
+                <div style="text-align: left; margin-left: 25%; font-size: 16px;">
+                    <a href="/">← 뒤로가기</a>
+                </div>
+                <div style="margin-bottom: 10px; font-size: 30px; font-weight: 400; margin-top: 70px;">Login</div>
+                <form method="post" th:action="@{/user/login.do}">
+                    <div class="mb-3 row row justify-content-center" style="margin-top: 40px;">
+                        <label for="userEmail"></label>
+                        <div class="col-sm-9" style="width: 35%;"><input type="text" name="userEmail" id="userEmail" placeholder="아이디(이메일 계정)" class="form-control"></div>
+                    </div>
+
+                    <div class="mb-3 row row justify-content-center">
+                        <label for="userPw"></label>
+                        <div class="col-sm-9" style="width: 35%;"><input type="password" name="userPw" id="userPw" placeholder="비밀번호" class="form-control"></div>
+                    </div>
+                    <button class="btn btn-secondary" style="width: 34%;" type="submit">로그인</button>
+
+                    <div class="mb-3 row justify-content-center" style="margin-top: 10px;">
+                        <div class="col-auto">
+                            <a th:href="@{/user/findId.form}">아이디찾기</a>
+                        </div>
+                        <div class="col-auto">
+                            <a th:href="@{/user/findPw.form}">비밀번호 찾기</a>
+                        </div>
+                        <div class="col-auto">
+                            <a th:href="@{/user/join.do}" class="blink" style="font-weight: 400; color: #0766AD;">회원가입✨</a>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 10px; margin-top: 50px;">간편하게 로그인하기</div>
+                    <div class="set" style="height: 100px;">
+                        <a style="margin-left: 5px;"><img th:src="@{/image/카카오톡로그인.png}" width="20%"></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

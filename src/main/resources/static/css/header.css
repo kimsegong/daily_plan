@@ -19,11 +19,6 @@
 	margin-top:20px;
 }
 
-.user {
- margin-top:20px;
- width: max-content;
-		
-}
 .user > a {
   display: inline-block;
 }
