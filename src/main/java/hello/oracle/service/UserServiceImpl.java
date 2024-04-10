@@ -92,9 +92,9 @@ public class UserServiceImpl implements UserService{
 
     }
     @Override
-    public UserDto getUserById(int userId) {
+    public UserDto getUserById(int userNo) {
         // 사용자 조회 로직
-        return userMapper.selectUser(userId);
+        return userMapper.selectUser(userNo);
     }
 
 

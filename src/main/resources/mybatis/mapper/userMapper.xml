@@ -30,8 +30,9 @@
   </select>
 
   <select id="selectUser" parameterType="Map" resultType="UserDto">
-    SELECT USER_ID, USER_NAME, ADDRESS, PHONE_NO
+    SELECT USER_NO, USER_EMAIL, USER_PW, USER_NAME, USER_PHONE, CREATE_AT, UPDATE_AT
       FROM USER_T
+     WHERE USER_NO = #{userNo}
   </select>
 
 </mapper>

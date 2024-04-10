@@ -11,8 +11,8 @@ public interface UserMapper {
 
   public UserDto getUser(Map<String, Object> map);
   public int insertUser(UserDto user);
-  public UserDto selectUser(int userId);
-  public Map<String, Objects> updateUser(int userId);
-  public int deleteUser(int userId);
+  public UserDto selectUser(int userNo);
+  public Map<String, Objects> updateUser(int userNo);
+  public int deleteUser(int userNo);
 
 }

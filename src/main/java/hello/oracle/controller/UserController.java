@@ -2,7 +2,6 @@ package hello.oracle.controller;
 
 import hello.oracle.dto.UserDto;
 import hello.oracle.service.UserServiceImpl;
-import hello.oracle.util.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.IOException;
 import java.util.Map;
 
 @RequestMapping(value="/user")
@@ -51,9 +49,9 @@ public class UserController {
   }
 
   @GetMapping("/mypage.form")
-  public String mypageForm(Model model, int userId) {
-    UserDto user = userService.getUserById(userId);
+  public String mypageForm(Model model, @RequestParam(value="userNo", required=false, defaultValue="0") int userNo) {
+    UserDto user = userService.getUserById(userNo);
     model.addAttribute("user", user);
-    return "main/mypage";
+    return "user/mypage";
   }
 }
