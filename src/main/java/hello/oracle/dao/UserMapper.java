@@ -12,7 +12,7 @@ public interface UserMapper {
   public UserDto getUser(Map<String, Object> map);
   public int insertUser(UserDto user);
   public UserDto selectUser(int userNo);
-  public Map<String, Objects> updateUser(int userNo);
+  public int updateUser(UserDto user);
   public int deleteUser(int userNo);
 
 }

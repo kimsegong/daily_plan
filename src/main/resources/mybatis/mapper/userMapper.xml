@@ -35,4 +35,12 @@
      WHERE USER_NO = #{userNo}
   </select>
 
+  <update id="updateUser" parameterType="UserDto">
+    UPDATE USER_T
+       SET USER_NAME = #{userName}
+         , USER_PW = #{userPw}
+         , USER_PHONE = #{userPhone}
+     WHERE USER_NO = #{userNo}
+  </update>
+
 </mapper>

@@ -96,6 +96,34 @@ public class UserServiceImpl implements UserService{
         // 사용자 조회 로직
         return userMapper.selectUser(userNo);
     }
+    @Override
+    public ResponseEntity<Map<String, Object>> modify(HttpServletRequest request) {
+
+        String userName = request.getParameter("userName");
+        String userPhone = request.getParameter("userPhone");
+        String userPw = request.getParameter("userPw");
+        int userNo = Integer.parseInt(request.getParameter("userNo"));
+
+        UserDto user = UserDto.builder()
+                .userName(userName)
+                .userPhone(userPhone)
+                .userPw(userPw)
+                .userNo(userNo)
+                .build();
+
+        int modifyResult = userMapper.updateUser(user);
+
+        if(modifyResult == 1) {
+            HttpSession session = request.getSession();
+            UserDto sessionUser = (UserDto)session.getAttribute("user");
+            sessionUser.setUserName(userName);
+            sessionUser.setUserPhone(userPhone);
+            sessionUser.setUserPw(userPw);
+        }
+
+        return new ResponseEntity<>(Map.of("modifyResult", modifyResult), HttpStatus.OK);
+
+    }
 
 
 }

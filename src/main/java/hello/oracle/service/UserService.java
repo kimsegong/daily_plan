@@ -12,5 +12,6 @@ public interface UserService {
     public void join(HttpServletRequest request, HttpServletResponse response);
     public ResponseEntity<Map<String, Object>> checkEmail(String userEmail);
     public UserDto getUserById(int userNo);
+    public ResponseEntity<Map<String, Object>> modify(HttpServletRequest request);
 
 }
