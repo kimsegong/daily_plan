@@ -54,4 +54,10 @@ public class UserController {
     model.addAttribute("user", user);
     return "user/mypage";
   }
+  @PostMapping("/mypage.form")
+  public String modifyUser(HttpServletRequest request){
+    userService.modify(request);
+    return "user/mypage";
+  }
+
 }
