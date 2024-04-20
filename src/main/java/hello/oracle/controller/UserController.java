@@ -55,9 +55,9 @@ public class UserController {
     return "user/mypage";
   }
   @PostMapping("/mypage.form")
-  public String modifyUser(HttpServletRequest request){
+  public void modifyUser(HttpServletRequest request){
     userService.modify(request);
-    return "user/mypage";
+
   }
 
 }

@@ -27,7 +27,7 @@
 <body id="body">
  <div th:fragment="header" class="header_wrap">
      <div class="container text-center">
-         <div class="row">
+         <div class="row align-items-center">
              <div class="col-3" style="height: 140px;">
                  <!-- 로고 -->
                  <div class="logo">
@@ -36,13 +36,20 @@
                      </a>
                  </div>
              </div>
-             <th:block th:if="${session.user != null}">
-                 <a>로그인됨</a>
-             </th:block>
-             <a th:href="@{/user/login.do}" style="font-size: 20px; text-align: right; display: block; float: right;">로그인</a>
-             <a th:href="@{/user/mypage.form}" style="font-size: 20px; text-align: right; display: block; float: right;">마이페이지</a>
+             <div class="col-9 text-right">
+                 <th:block th:if="${session.user != null}">
+                     <a>로그인됨</a>
+                 </th:block>
+                 <div class="ml-auto mb-2">
+                     <a th:href="@{/user/login.do}" style="font-size: 20px; display: inline-block;">로그인</a>
+                 </div>
+                 <div class="ml-auto">
+                     <a th:href="@{/user/mypage.form}" style="font-size: 20px; display: inline-block;">마이페이지</a>
+                 </div>
+             </div>
          </div>
      </div>
+
      <!-- 네비게이션 바 -->
      <nav class="navbar navbar-expand-sm">
          <div class="container-fluid row" style="border-top: 1px solid #DED0B6;">

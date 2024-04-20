@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-    
+
   <!-- 설정 -->
   <settings>
     <setting name="mapUnderscoreToCamelCase" value="true"/>
@@ -12,6 +12,8 @@
 
   <typeAliases>
     <typeAlias alias="UserDto" type="hello.oracle.dto.UserDto"/>
+    <typeAlias alias="PlanDto" type="hello.oracle.dto.PlanDto"/>
   </typeAliases>
+
   
 </configuration>
