@@ -10,6 +10,6 @@ import java.util.Map;
 
 @Mapper
 public interface PlanMapper {
-    public List<PlanDto> selectPlan(Map<String, Object> map);
+    public List<PlanDto> selectPlan();
 
 }

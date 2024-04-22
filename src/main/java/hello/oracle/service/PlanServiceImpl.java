@@ -16,13 +16,7 @@ public class PlanServiceImpl implements PlanService{
     private final PlanMapper planMapper;
 
     @Override
-    public Map<String, Object> getPlan(int userNo, HttpServletRequest request) {
-
-        Map<String, Object> map = Map.of(
-                "userNo", userNo
-        );
-
-        List<PlanDto> planList = planMapper.selectPlan(map);
-        return Map.of("planList", planList);
+    public List<PlanDto> getPlan() throws Exception {
+        return planMapper.selectPlan();
     }
 }

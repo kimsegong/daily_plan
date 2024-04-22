@@ -5,23 +5,23 @@
 
 <mapper namespace="hello.oracle.dao.PlanMapper">
 
-<!--    <resultMap id="PlanMap" type="PlanDto">-->
-<!--        <id property="planNo" column="PLAN_NO" />-->
-<!--        <result property="userNo" column="USER_NO" />-->
-<!--        <result property="startAt" column="START_AT" />-->
-<!--        <result property="endAt" column="END_AT" />-->
-<!--        <result property="insertAt" column="INSERT_AT" />-->
-<!--        <result property="updateAt" column="UPDATE_AT" />-->
-<!--        <result property="important" column="IMPORTANT" />-->
-<!--        <result property="firstPlan" column="FIRST_PLAN" />-->
-<!--        <result property="firstComment" column="FIRST_COMMENT" />-->
-<!--        <result property="secondPlan" column="SECOND_PLAN" />-->
-<!--        <result property="secondComment" column="SECOND_COMMENT" />-->
-<!--        <result property="thirdPlan" column="THIRD_PLAN" />-->
-<!--        <result property="thirdComment" column="THIRD_COMMENT" />-->
-<!--    </resultMap>-->
+    <resultMap id="PlanMap" type="PlanDto">
+        <id property="planNo" column="PLAN_NO" />
+        <result property="userNo" column="USER_NO" />
+        <result property="startAt" column="START_AT" />
+        <result property="endAt" column="END_AT" />
+        <result property="insertAt" column="INSERT_AT" />
+        <result property="updateAt" column="UPDATE_AT" />
+        <result property="important" column="IMPORTANT" />
+        <result property="firstPlan" column="FIRST_PLAN" />
+        <result property="firstComment" column="FIRST_COMMENT" />
+        <result property="secondPlan" column="SECOND_PLAN" />
+        <result property="secondComment" column="SECOND_COMMENT" />
+        <result property="thirdPlan" column="THIRD_PLAN" />
+        <result property="thirdComment" column="THIRD_COMMENT" />
+    </resultMap>
 
-    <select id="selectPlan" parameterType="Map" resultType="PlanDto">
+    <select id="selectPlan" resultMap="PlanMap">
         SELECT PLAN_NO, START_AT, END_AT, INSERT_AT, UPDATE_AT, IMPORTANT, FIRST_PLAN, SECOND_PLAN, SECOND_COMMENT, THIRD_PLAN, THIRD_COMMENT
           FROM PLAN_T
     </select>
