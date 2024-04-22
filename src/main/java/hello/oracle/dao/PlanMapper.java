@@ -11,5 +11,5 @@ import java.util.Map;
 @Mapper
 public interface PlanMapper {
     public List<PlanDto> selectPlan();
-
+    public int insertPlan(PlanDto plan);
 }

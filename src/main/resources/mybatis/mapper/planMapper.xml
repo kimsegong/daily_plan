@@ -12,7 +12,6 @@
         <result property="endAt" column="END_AT" />
         <result property="insertAt" column="INSERT_AT" />
         <result property="updateAt" column="UPDATE_AT" />
-        <result property="important" column="IMPORTANT" />
         <result property="firstPlan" column="FIRST_PLAN" />
         <result property="firstComment" column="FIRST_COMMENT" />
         <result property="secondPlan" column="SECOND_PLAN" />
@@ -22,9 +21,28 @@
     </resultMap>
 
     <select id="selectPlan" resultMap="PlanMap">
-        SELECT PLAN_NO, START_AT, END_AT, INSERT_AT, UPDATE_AT, IMPORTANT, FIRST_PLAN, SECOND_PLAN, SECOND_COMMENT, THIRD_PLAN, THIRD_COMMENT
+        SELECT PLAN_NO, START_AT, END_AT, INSERT_AT, UPDATE_AT, FIRST_PLAN, FIRST_COMMENT, SECOND_PLAN, SECOND_COMMENT, THIRD_PLAN, THIRD_COMMENT
           FROM PLAN_T
     </select>
+
+    <insert id="insertPlan" parameterType="PlanDto">
+        INSERT INTO PLAN_T(
+        PLAN_NO, USER_NO, START_AT, END_AT, INSERT_AT, UPDATE_AT, FIRST_PLAN, FIRST_COMMENT, SECOND_PLAN, SECOND_COMMENT, THIRD_PLAN, THIRD_COMMENT
+        )VALUES(
+        PLAN_SEQ.NEXTVAL,
+        #{userNo, jdbcType=INTEGER},
+        #{startAt, jdbcType=VARCHAR},
+        #{endAt, jdbcType=VARCHAR},
+        TO_CHAR(SYSDATE,'YYYY/MM/DD'),
+        TO_CHAR(SYSDATE,'YYYY/MM/DD'),
+        #{firstPlan, jdbcType=VARCHAR},
+        #{firstComment, jdbcType=VARCHAR},
+        #{secondPlan, jdbcType=VARCHAR},
+        #{secondComment, jdbcType=VARCHAR},
+        #{thirdPlan, jdbcType=VARCHAR},
+        #{thirdComment, jdbcType=VARCHAR}
+        )
+    </insert>
 
 
 </mapper>

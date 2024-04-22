@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{layout/header::head('일정작성')}"></head>
+<body>
+<div th:replace="~{layout/header::header}"></div>
+
+<div class="container text-center">  <!-- 그리드 시작 -->
+    <div class="row">
+        <div class="col-1">
+        </div>
+        <div class="col-10" >
+            <h2>일정작성</h2>
+            <form method="post" id="frm_package_add" th:action="@{/plan/add.do}">
+                <div style="margin: 30px 270px;" class="w-50 p-3">
+                    <div>
+                        <label for="firstPlan" class="form-label"></label>
+                        <input type="text" name="firstPlan" id="firstPlan" class="form-control" placeholder="첫번째 일정">
+                    </div>
+                    <div>
+                        <label for="firstComment" class="form-label"></label>
+                        <input type="text" id="firstComment" name="firstComment" class="form-control" placeholder="첫번째 일정 세부내용">
+                    </div>
+                    <div>
+                        <label for="secondPlan" class="form-label"></label>
+                        <input type="text" id="secondPlan" name="secondPlan" class="form-control" placeholder="두번째 일정">
+                    </div>
+                    <div>
+                        <label for="secondComment" class="form-label"></label>
+                        <input type="text" id="secondComment" name="secondComment" class="form-control" placeholder="두번째 일정 세부내용">
+                    </div>
+                    <div>
+                        <label for="thirdPlan" class="form-label"></label>
+                        <input type="text" id="thirdPlan" name="thirdPlan" class="form-control" placeholder="세번째 일정">
+                    </div>
+                    <div>
+                        <label for="thirdComment" class="form-label"></label>
+                        <input type="text" id="thirdComment" name="thirdComment" class="form-control" placeholder="세번째 일정 세부내용">
+                    </div>
+                    <div>
+                        <label for="startAt" class="form-label">시작날짜/시간</label>
+                        <input type="datetime-local" name="startAt" id="startAt" class="form-control">
+                    </div>
+                    <div>
+                        <label for="endAt" class="form-label">끝날짜/시간</label>
+                        <input type="datetime-local" name="endAt" id="endAt" class="form-control">
+                    </div>
+
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <input type="hidden" name="userNo" th:value="${session.user.userNo}">
+                        <button type="submit" class="btn btn-primary" style="margin: 32px;">작성완료</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="col-1">
+        </div>
+    </div>
+</div>
+
+
+
+<div th:replace="~{layout/footer::footer}"></div>
+</body>
+</html>

@@ -16,7 +16,6 @@ public class PlanDto {
     private String endAt;
     private String insertAt;
     private String updateAt;
-    private int important;
     private String firstPlan;
     private String firstComment;
     private String secondPlan;
