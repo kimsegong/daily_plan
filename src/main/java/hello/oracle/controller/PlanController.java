@@ -10,12 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @Controller
@@ -38,10 +34,10 @@ public class PlanController {
         return "plan/write";
     }
 
-    @PostMapping("/plan/add.do")
+    @PostMapping("/layout/add.do")
     public String insertPlan(HttpServletRequest request, HttpServletResponse response){
         planService.insertPlan(request, response);
-        return "layout/plan";
+        return "layout/main";
     }
 
 }
