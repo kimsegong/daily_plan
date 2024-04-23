@@ -202,7 +202,7 @@
 
             var eventData = {
                firstPlan: $('#firstPlan').val(),
-               firstContent: $('#firstComment').val(),  // 내용 필드 id가 firstComment로 가정
+               firstContent: $('#firstComment').val(),
                secondPlan: $('#secondPlan').val(),
                secondContent: $('#secondComment').val(),
                thirdPlan: $('#thirdPlan').val(),
@@ -219,9 +219,10 @@
                data: JSON.stringify(eventData),
                success: function(response) {
                   alert('이벤트가 성공적으로 추가되었습니다.');
-                  // 필요한 경우 페이지 새로 고침 등의 추가 작업 수행
                },
                error: function(xhr, status, error) {
+                  console.log(xhr.status);  // HTTP 상태 코드 로깅
+                  console.log(xhr.responseText);
                   alert('이벤트 추가 실패: ' + xhr.responseText);
                }
             });

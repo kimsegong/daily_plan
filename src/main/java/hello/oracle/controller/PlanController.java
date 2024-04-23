@@ -35,9 +35,14 @@ public class PlanController {
     }
 
     @PostMapping("/layout/add.do")
-    public String insertPlan(HttpServletRequest request, HttpServletResponse response){
-        planService.insertPlan(request, response);
-        return "layout/main";
+    public ResponseEntity<String> insertPlan(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            planService.insertPlan(request, response);
+            return ResponseEntity.ok("Event added successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding event");
+        }
+        
     }
 
 }
