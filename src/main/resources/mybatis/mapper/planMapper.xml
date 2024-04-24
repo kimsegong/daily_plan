@@ -57,5 +57,11 @@
           WHERE PLAN_NO = #{planNo, jdbcType=INTEGER}
     </update>
 
+    <delete id="deletePlan" parameterType="int">
+        DELETE
+          FROM PLAN_T
+         WHERE PLAN_NO = #{planNo, jdbcType=INTEGER}
+    </delete>
+
 
 </mapper>

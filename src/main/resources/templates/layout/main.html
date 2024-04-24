@@ -23,6 +23,14 @@
       border-color: #795458; /* 호버 시 버튼의 테두리 색상 설정 */
    }
 
+   .btn-kong {
+      background-color: #EAD8C0;
+   }
+   .nav-link {
+      font-size: large;
+      color: #795458;
+   }
+
 </style>
 <body>
 
@@ -33,16 +41,16 @@
          <div class="col-md-3">
             <ul class="nav flex-column">
                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">달력</a>
+                  <a class="nav-link active" aria-current="page" href="/">Calendar🗓️</a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="/">ToDoList</a>
+                  <a class="nav-link" href="/">지도?</a>
                </li>
                <li class="nav-item">
                   <a class="nav-link" href="#">설정</a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link disabled" aria-disabled="true">행복한하루되세연</a>
+                  <a class="nav-link disabled" aria-disabled="true">❤️🩷💙🩵💜</a>
                </li>
             </ul>
          </div>
@@ -57,35 +65,36 @@
          <div class="modal-content">
             <div class="modal-header">
                <h5 class="modal-title" id="editEventModalLabel">일정 수정</h5>
-               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               <button type="button" class="btn-close btn-kong" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                <form id="editEventForm">
                   <input type="hidden" id="planNo" name="planNo">
+
+                  <!-- 첫 번째 일정 세트 -->
                   <div class="form-group">
                      <label for="firstPlan">첫번째 일정</label>
                      <input type="text" class="form-control" name="firstPlan" id="firstPlan">
-                  </div>
-                  <div class="form-group">
                      <label for="firstComment">내용</label>
-                     <input type="text" class="form-control"  name="firstComment" id="firstComment">
+                     <input type="text" class="form-control" name="firstComment" id="firstComment">
                   </div>
+
+                  <!-- 두 번째 일정 세트 -->
                   <div class="form-group">
                      <label for="secondPlan">두번째일정</label>
-                     <input type="text" class="form-control"  name="secondPlan" id="secondPlan">
-                  </div>
-                  <div class="form-group">
+                     <input type="text" class="form-control" name="secondPlan" id="secondPlan">
                      <label for="secondComment">내용</label>
                      <input type="text" class="form-control" name="secondComment" id="secondComment">
                   </div>
+
+                  <!-- 세 번째 일정 세트 -->
                   <div class="form-group">
                      <label for="thirdPlan">세번째일정</label>
-                     <input type="text" class="form-control"name="thirdPlan" id="thirdPlan">
-                  </div>
-                  <div class="form-group">
+                     <input type="text" class="form-control" name="thirdPlan" id="thirdPlan">
                      <label for="thirdComment">내용</label>
-                     <input type="text" class="form-control"name="thirdComment" id="thirdComment">
+                     <input type="text" class="form-control" name="thirdComment" id="thirdComment">
                   </div>
+
                   <div class="form-group">
                      <label for="startAt">시작 날짜</label>
                      <input type="datetime-local" name="startAt"  class="form-control" id="startAt">
@@ -95,11 +104,11 @@
                      <input type="datetime-local" name="endAt"  id="endAt" class="form-control">
                   </div>
                   <div class="modal-footer">
-                     <button type="button" class="btn btn-primary" id="edit_btn">저장</button>
+                     <button type="button" class="btn btn-kong" id="edit_btn">저장</button>
+                     <button type="button" class="btn btn-danger" id="delete_btn">삭제</button>
                   </div>
                </form>
             </div>
-
          </div>
       </div>
    </div>
@@ -227,7 +236,30 @@
 
       });
 
-
+      $(document).ready(function() {
+         $('#delete_btn').click(function() {
+            var planNo = $('#planNo').val(); // 삭제할 일정의 고유 번호를 가져옵니다.
+            if (confirm('일정을 삭제하시겠습니까?')) {
+               $.ajax({
+                  url: '/layout/delete.do',
+                  type: 'POST',
+                  data: { planNo: planNo },
+                  dataType: 'json',
+                  success: function(resData) {
+                     if (resData.removeResult === 1) {
+                        alert('일정이 삭제되었습니다.');
+                        $('#editEventModal').modal('hide'); // 모달 창을 닫습니다.
+                     } else {
+                        alert('일정이 삭제되지 않았습니다.');
+                     }
+                  },
+                  error: function() {
+                     alert('서버 오류가 발생했습니다.');
+                  }
+               });
+            }
+         });
+      });
 
 
    </script>

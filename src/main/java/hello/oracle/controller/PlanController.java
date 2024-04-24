@@ -31,8 +31,8 @@ public class PlanController {
     }
 
     @PostMapping("/plan/add.do")
-    public String insertPlan(HttpServletRequest request, HttpServletResponse response){
-        planService.insertPlan(request, response);
+    public String insertPlan(HttpServletRequest request){
+        planService.insertPlan(request);
         return "redirect:/layout/main.do";
     }
 

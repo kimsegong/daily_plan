@@ -49,8 +49,13 @@ public class MainController {
         Map<String, Object> response = new HashMap<>();
         int modifyResult = planService.modifyPlan(request);
         response.put("modifyResult", modifyResult);
-        System.out.println("!!!!!!!!!!!!!!!!!!!" + modifyResult);
         return response;
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/layout/delete.do", produces ="application/json")
+    public Map<String, Object> deletePlan(@RequestParam(value="planNo", required=false, defaultValue="0") int planNo){
+        return planService.deletePlan(planNo);
     }
 
 }

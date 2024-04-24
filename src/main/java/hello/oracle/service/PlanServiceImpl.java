@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -22,7 +23,7 @@ public class PlanServiceImpl implements PlanService{
     }
 
     @Override
-    public void insertPlan(HttpServletRequest request, HttpServletResponse response) {
+    public void insertPlan(HttpServletRequest request) {
 
         String startAt = request.getParameter("startAt");
         String endAt = request.getParameter("endAt");
@@ -77,4 +78,12 @@ public class PlanServiceImpl implements PlanService{
         return modifyResult;
 
     }
+
+    @Override
+    public Map<String, Object> deletePlan(int planNo) {
+      int removeResult =  planMapper.deletePlan(planNo);
+      return Map.of("removeResult", removeResult);
+    }
+
+
 }

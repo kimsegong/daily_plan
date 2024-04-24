@@ -13,6 +13,7 @@ public interface PlanMapper {
     public List<PlanDto> selectPlan();
     public int insertPlan(PlanDto plan);
     public int modifyPlan(PlanDto plan);
+    public int deletePlan(int PlanNo);
 
 
 }
