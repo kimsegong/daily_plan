@@ -12,4 +12,7 @@ import java.util.Map;
 public interface PlanMapper {
     public List<PlanDto> selectPlan();
     public int insertPlan(PlanDto plan);
+    public int modifyPlan(PlanDto plan);
+
+
 }

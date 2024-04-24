@@ -20,7 +20,7 @@
         <result property="thirdComment" column="THIRD_COMMENT" />
     </resultMap>
 
-    <select id="selectPlan" resultMap="PlanMap">
+    <select id="selectPlan" resultType="PlanDto">
         SELECT PLAN_NO, START_AT, END_AT, INSERT_AT, UPDATE_AT, FIRST_PLAN, FIRST_COMMENT, SECOND_PLAN, SECOND_COMMENT, THIRD_PLAN, THIRD_COMMENT
           FROM PLAN_T
     </select>
@@ -43,6 +43,19 @@
         #{thirdComment, jdbcType=VARCHAR}
         )
     </insert>
+
+    <update id="modifyPlan" parameterType="PlanDto">
+        UPDATE PLAN_T
+            SET START_AT = #{startAt, jdbcType=VARCHAR}
+              , END_AT =  #{endAt, jdbcType=VARCHAR}
+              , FIRST_PLAN = #{firstPlan, jdbcType=VARCHAR}
+              , FIRST_COMMENT = #{firstComment, jdbcType=VARCHAR}
+              , SECOND_PLAN = #{secondPlan, jdbcType=VARCHAR}
+              , SECOND_COMMENT = #{secondComment, jdbcType=VARCHAR}
+              , THIRD_PLAN = #{thirdPlan, jdbcType=VARCHAR}
+              , THIRD_COMMENT = #{thirdComment, jdbcType=VARCHAR}
+          WHERE PLAN_NO = #{planNo, jdbcType=INTEGER}
+    </update>
 
 
 </mapper>

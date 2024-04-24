@@ -91,6 +91,8 @@ public class UserServiceImpl implements UserService{
         return new ResponseEntity<>(Map.of("enableEmail", enableEmail), HttpStatus.OK);
 
     }
+
+    @Transactional(readOnly=true)
     @Override
     public UserDto getUserById(int userNo) {
         // 사용자 조회 로직
