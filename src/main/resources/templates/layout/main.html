@@ -39,6 +39,9 @@
    <div class="container">
       <div class="row">
          <div class="col-md-3">
+            <th:block th:if="${session.user != null}">
+               <input type="hidden" id="userNo" name="userNo" th:value="${session.user.userNo}">
+            </th:block>
             <ul class="nav flex-column">
                <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="/">Calendar🗓️</a>
@@ -129,13 +132,27 @@
             },
             locale: 'ko',
             events: function(fetchInfo, successCallback, failureCallback) {
-               fetch('/layout/plan.do')
+               // 로그인한 사용자의 ID를 기반으로 일정 데이터를 서버에서 가져옴
+               fetch('/layout/plan.do', {
+                  method: 'GET',
+                  credentials: 'same-origin'
+               })
+                       .then(response => response.json())
+                       .then(userInfo => {
+                          // userInfo에는 로그인한 사용자의 정보가 들어있음
+                          var userNoValue = document.getElementById('userNo').value;
+                          return fetch(`/layout/plan.do?userNo=${userNoValue}`, {
+                             method: 'GET',
+                             credentials: 'same-origin'
+                          });
+
+                       })
                        .then(response => response.json())
                        .then(data => {
                           var events = data.map(plan => ({
                              id: plan.planNo,
-                             title: [plan.firstPlan, plan.secondPlan, plan.thirdPlan].filter(Boolean), // 이벤트 제목에 줄바꿈 포함
-                             start: new Date(plan.startAt.replace(' ', 'T')), // 공백을 T로 교체
+                             title: [plan.firstPlan, plan.secondPlan, plan.thirdPlan].filter(Boolean),
+                             start: new Date(plan.startAt.replace(' ', 'T')),
                              end: new Date(plan.endAt.replace(' ', 'T')),
                              extendedProps: {
                                 planNo: plan.planNo,

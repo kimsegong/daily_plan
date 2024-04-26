@@ -9,6 +9,7 @@ import java.util.Map;
 
 public interface UserService {
     public void login(HttpServletRequest request, HttpServletResponse response) throws Exception;
+    public void logout(HttpServletRequest request, HttpServletResponse response);
     public void join(HttpServletRequest request, HttpServletResponse response);
     public ResponseEntity<Map<String, Object>> checkEmail(String userEmail);
     public UserDto getUserById(int userNo);

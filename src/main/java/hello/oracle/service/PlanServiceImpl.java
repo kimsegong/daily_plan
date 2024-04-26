@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.Map;
@@ -18,8 +19,16 @@ public class PlanServiceImpl implements PlanService{
     private final PlanMapper planMapper;
     @Transactional(readOnly=true)
     @Override
-    public List<PlanDto> getPlan() throws Exception {
-        return planMapper.selectPlan();
+    public void getPlan(HttpServletRequest request, Model model) throws Exception {
+        int userNo = Integer.parseInt(request.getParameter("userNo"));
+
+        Map<String, Object> map = Map.of("userNo", userNo);
+
+        List<PlanDto> planList = planMapper.selectPlan(map);
+
+        model.addAttribute("planList", planList);
+        String params = "userNo=" + request.getParameter("userNo");
+
     }
 
     @Override

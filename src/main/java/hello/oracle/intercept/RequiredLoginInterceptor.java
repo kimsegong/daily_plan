@@ -1,11 +1,10 @@
-package com.tour.hanbando.intercept;
+package hello.oracle.intercept;
 
 import java.io.PrintWriter;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -27,7 +26,7 @@ public class RequiredLoginInterceptor implements HandlerInterceptor {
       PrintWriter out = response.getWriter();
       out.println("<script>");
       out.println("if(confirm('로그인이 필요한 기능입니다. 로그인할까요?')){");
-      out.println("location.href='"+ request.getContextPath() +"/user/login.form'");
+      out.println("location.href='"+ request.getContextPath() +"/user/login.do'");
       out.println("} else {");
       out.println("history.back()");
       out.println("}");
