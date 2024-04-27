@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,21 +20,17 @@ public class PlanServiceImpl implements PlanService{
     private final PlanMapper planMapper;
     @Transactional(readOnly=true)
     @Override
-    public void getPlan(HttpServletRequest request, Model model) throws Exception {
-        int userNo = Integer.parseInt(request.getParameter("userNo"));
-
-        Map<String, Object> map = Map.of("userNo", userNo);
-
-        List<PlanDto> planList = planMapper.selectPlan(map);
-
-        model.addAttribute("planList", planList);
-        String params = "userNo=" + request.getParameter("userNo");
+    public List<PlanDto> getPlan(int userNo) throws Exception {
+        Map<String, Object> params = new HashMap<>();
+        params.put("userNo", userNo);
+        return planMapper.selectPlan(params);
 
     }
 
     @Override
     public void insertPlan(HttpServletRequest request) {
 
+        int userNo = Integer.parseInt(request.getParameter("userNo"));
         String startAt = request.getParameter("startAt");
         String endAt = request.getParameter("endAt");
         String firstPlan = request.getParameter("firstPlan");
@@ -44,6 +41,7 @@ public class PlanServiceImpl implements PlanService{
         String thirdComment = request.getParameter("thirdComment");
 
         PlanDto plan = PlanDto.builder()
+                        .userNo(userNo)
                         .startAt(startAt)
                         .endAt(endAt)
                         .firstPlan(firstPlan)

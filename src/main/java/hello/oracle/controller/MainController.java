@@ -32,13 +32,17 @@ public class MainController {
         return "layout/main";
     }
 
+
+    @ResponseBody
     @GetMapping("/layout/plan.do")
-    public String getPlans(HttpServletRequest request, Model model) throws Exception {
-            planService.getPlan(request, model);
-            return "/layout/main";
-
+    public ResponseEntity<List<PlanDto>> getPlan(@RequestParam(value="userNo", required=false, defaultValue="0") int userNo){
+        try {
+            List<PlanDto> planList = planService.getPlan(userNo);
+            return new ResponseEntity<>(planList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-
 
     @ResponseBody
     @PostMapping(value = "/layout/modify.do", produces ="application/json")
