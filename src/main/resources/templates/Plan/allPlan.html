@@ -3,17 +3,25 @@
 <head th:replace="~{layout/header::head('일정작성')}"></head>
 <style>
     .plan-box {
-        border: 1px solid #FF8A08; /* 회색 테두리 */
-        padding: 10px; /* 내부 여백 */
-        margin-bottom: 15px; /* 박스 간 마진 */
-        background-color: #ECCA9C; /* 배경 색상 */
-        border-radius: 5px; /* 모서리 둥글게 */
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 그림자 효과 */
+        border: 1px solid #FF8A08;
+        padding: 10px;
+        margin: 15px auto; /* 위아래 마진은 0, 좌우 마진은 자동 */
+        background-color: #FFF7FC;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        text-align: left;
+        width: 80%; /* 너비를 80%로 설정 */
+        max-width: 500px; /* 최대 너비를 500px로 설정 */
     }
-    .font {
+    .font1 {
         font-size: 18px;
         font-weight: normal;
-        color: #1A4D2E;
+        color: #874CCC;
+    }
+    .font2 {
+        font-size: 18px;
+        font-weight: normal;
+        color: #87A922;
     }
     #gi{
         margin-bottom: 20px;
@@ -26,6 +34,30 @@
     .value {
         display: inline-block; /* 값이 라벨과 같은 줄에 표시 */
     }
+    .dropdown {
+        display: inline-block; /* 드롭다운을 인라인 블록 요소로 만들어 정렬 가능하게 함 */
+    }
+    .dropdown-toggle {
+        background: none;
+        border: none;
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        background-color: #FFF7FC; /* 배경색 하얗게 설정 */
+        right: 0;
+        z-index: 1000;
+    }
+
+    .dropdown-menu a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+
+
 
 </style>
 
@@ -81,17 +113,24 @@
                 totalPage = resData.totalPage;
                 if (resData.planList != null && resData.planList.length > 0) {
                     $.each(resData.planList, (i, plan) => {
-                        console.log("응답 데이터:", resData);
                         let str = '<div class="plan-box">';
-                        str += '<div class="font">시작날짜/시간 <span class="label"></span><span class="value">' + formatDateTime(plan.startAt) + '</span></div>';
-                        str += '<div class="font">종료날짜/시간 <span class="label"></span><span class="value">' + formatDateTime(plan.endAt) + '</span></div>';
-                        str += '<div class="font">첫번째일정 <span class="label"></span><span class="value">' + (plan.firstPlan || '') + '</span></div>';
-                        str += '<div><span>' + (plan.firstComment || '') + '</span></div>';
-                        str += '<div class="font">두번째일정 <span class="label"></span><span class="value">' + (plan.secondPlan || '') + '</span></div>';
-                        str += '<div><span>' + (plan.secondComment || '') + '</span></div>';
-                        str += '<div class="font">세번째일정 <span class="label"></span><span class="value">' + (plan.thirdPlan || '') + '</span></div>';
-                        str += '<div><span>' + (plan.thirdComment || '') + '</span></div>';
-                        str += '</div>';
+                        str +='<div class="dropdown">'
+                        str +='<a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">' + '...' + '</a>'
+                        str +=' <ul class="dropdown-menu">'
+                        str +='<li><a class="dropdown-item" th:href="@{/layout/modify.do}">수정</a></li>'
+                        str += '<li><div class="delete-btn" data-plan-no="' + plan.planNo + '"><a class="dropdown-item">삭제</a></div></li>'
+                        str +='</ul>'
+                        str +='</div>'
+                        str +='<input type="hidden" id="planNo" th:value="${plan.planNo}">'
+                        str +='<div class="font1">시작날짜/시간 <span class="label"></span><span class="value">' + formatDateTime(plan.startAt) + '</span></div>';
+                        str +='<div class="font2">종료날짜/시간 <span class="label"></span><span class="value">' + formatDateTime(plan.endAt) + '</span></div>';
+                        str +='<div class="font1">첫번째일정 <span class="label"></span><span class="value">' + (plan.firstPlan || '') + '</span></div>';
+                        str +='<div><span>' + (plan.firstComment || '') + '</span></div>';
+                        str +='<div class="font2">두번째일정 <span class="label"></span><span class="value">' + (plan.secondPlan || '') + '</span></div>';
+                        str +='<div><span>' + (plan.secondComment || '') + '</span></div>';
+                        str +='<div class="font1">세번째일정 <span class="label"></span><span class="value">' + (plan.thirdPlan || '') + '</span></div>';
+                        str +='<div><span>' + (plan.thirdComment || '') + '</span></div>';
+                        str +='</div>';
                         $('#plan_list').append(str);
                     });
                 } else {
@@ -106,6 +145,33 @@
     };
 
     fnGetPlanList();
+
+    $(document).ready(function() {
+        $(document).on('click', '.delete-btn', function() {
+            var planNo = $(this).data('plan-no'); // data-plan-no 속성을 읽어옵니다.
+            if (confirm('일정을 삭제하시겠습니까?')) {
+                $.ajax({
+                    url: '/layout/delete.do',
+                    type: 'POST',
+                    data: { planNo: planNo },
+                    dataType: 'json',
+                    success: function(resData) {
+                        if (resData.removeResult === 1) {
+                            alert('일정이 삭제되었습니다.');
+                            $(this).closest('.plan-box').remove(); // 삭제된 요소를 DOM에서 제거합니다.
+                        } else {
+                            alert('일정이 삭제되지 않았습니다.');
+                        }
+                    },
+                    error: function() {
+                        alert('서버 오류가 발생했습니다.');
+                    }
+                });
+            }
+        });
+    });
+
+
 
 </script>
 
