@@ -10,6 +10,7 @@ import java.util.Map;
 
 public interface PlanService {
     public List<PlanDto> getPlan(int userNo) throws Exception;
+    public Map<String, Object> getAllPlan(HttpServletRequest request, int userNo);
     public void insertPlan(HttpServletRequest request);
     public int modifyPlan(HttpServletRequest request);
     public Map<String, Object> deletePlan(int planNo);

@@ -1,84 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head th:replace="~{layout/header::head('Daily_Plan 마이페이지')}"></head>
+<style>
+    #userName {
+        font-size: large;
+        font-weight: bold;
+    }
+    #userEmail{
+        font-size: medium;
+    }
+    .container1 {
+        display: flex;          /* Flexbox를 사용하여 아이템들을 나란히 배열 */
+        justify-content: center;/* 센터 정렬 */
+        align-items: center;    /* 세로 중앙 정렬 */
+        height: 30vh;          /* 뷰포트의 전체 높이 */
+    }
+    .box {
+        width: 100px;            /* 네모의 가로 길이 */
+        height: 100px;           /* 네모의 세로 길이 */
+        background-color: #DBA979; /* 배경 색 */
+        margin: 10px;            /* 네모 사이의 간격 */
+        display: flex;           /* Flexbox 설정 */
+        justify-content: center; /* 텍스트 수평 중앙 정렬 */
+        align-items: center;     /* 텍스트 수직 중앙 정렬 */
+        font-size: 16px;         /* 텍스트 크기 */
+        font-weight: normal;
+        border-radius: 15px;     /* 모서리를 둥글게 */
+    }
+
+    .container {
+        margin-top: 20px;
+    }
+    .go {
+        margin-bottom: 60px;
+    }
+    .bordered-col {
+        border-left: 2px solid #ff0000; /* 초기 색상은 빨간색 */
+        border-right: 2px solid #ff0000; /* 초기 색상은 빨간색 */
+        animation: colorChange 6s linear infinite; /* 애니메이션 적용 */
+    }
+
+    @keyframes colorChange {
+        0% {
+            border-color: #ff0000; /* 빨간색 */
+        }
+        33% {
+            border-color: #0000ff; /* 파랑색 */
+        }
+        66% {
+            border-color: #ff7f00; /* 주황색 */
+        }
+        100% {
+            border-color: #ff0000; /* 빨간색으로 다시 */
+        }
+    }
+
+
+</style>
 <body>
 <div th:replace="~{layout/header::header}"></div>
 
 
-<div class="main_wrap">
-    <div class="wrap wrap_7">
 
-        <p class="title">개인정보수정</p>
-
-        <form method="post" id="myForm" th:action="@{/user/mypage.form}">
-
-            <hr class="my-3">
-            <div class="row mb-2">
-                <label for="userName" class="col-sm-3 col-form-label">이름</label>
-                <div class="col-sm-9"><input type="text" th:value="${session.user.userName}" id="userName" name="userName" class="form-control"></div>
-                <div class="col-sm-3"></div>
-                <div class="col-sm-9 mb-3" id="msg_name"></div>
+<div class="container text-center">
+    <div class="row">
+        <div class="col">
+        </div>
+        <div class="col-8 bordered-col go">
+            <div class="container" style="margin-bottom: 20px;">
+                <div>
+                    <label for="userName"></label>
+                    <div th:text="${session.user.userName}" id="userName"></div>
+                </div>
+                <div>
+                    <label for="userEmail"></label>
+                    <div th:text="${session.user.userEmail}" id="userEmail"></div>
+                </div>
             </div>
-            <div class="row mb-2">
-                <label for="userEmail" class="col-sm-3 col-form-label">이메일</label>
-                <div class="col-sm-6" type="text" th:text="${session.user.userEmail}" id="userEmail"></div>
-                <div class="col-sm-3"></div>
-                <div class="col-sm-9" id="msg_email"></div>
+            <span style="font-size:23px; color:#795458;" th:text="|${userPlanCount}개의 기록✏️|"></span>
+            <div th:if="${userPlanCount >= 10}" style="font-size:20px; color:green;">
+                잘하고 있군요😉
             </div>
-            <div class="row mb-2" style="margin-top: 20px">
-                <label for="userPhone" class="col-sm-3 col-form-label">휴대폰번호</label>
-                <div class="col-sm-6"><input type="tel" th:value="${session.user.userPhone}" id="userPhone" name="userPhone" class="form-control"></div>
+            <div th:if="${userPlanCount < 10}" style="font-size:20px; color:#D20062;">
+                좀 더 계획을 세워보세요🥲
             </div>
-
-            <hr class="my-3">
-
-            <div class="row mb-2">
-                <label for="userPw" class="col-sm-3 col-form-label">비밀번호</label>
-                <div class="col-sm-9"><input type="password" th:value="${session.user.userPw}" id="userPw" name="userPw" class="form-control"></div>
-                <div class="col-sm-3"></div>
-                <div class="col-sm-9 mb-3" id="msg_pw"></div>
+            <div class="container1">
+                <div class="box"><a th:href="@{/plan/allPlan.do(userNo=${session.user.userNo})}">나의 기록들</a></div>
+                <div class="box"><a th:href="@{/user/modifyUser.form}">내정보 수정</a></div>
+                <div class="box">Text 3</div>
             </div>
+        </div>
 
-            <div class="row mb-2">
-                <label for="userPw2" class="col-sm-3 col-form-label">비밀번호 확인</label>
-                <div class="col-sm-9"><input type="password" id="userPw2" class="form-control"></div>
-                <div class="col-sm-3"></div>
-                <div class="col-sm-9 mb-3" id="msg_pw2"></div>
-            </div>
-
-            <hr class="my-3">
-
-            <div class="row mb-4">
-                <div class="col-sm-3">가입일</div>
-                <div class="col-sm-9" th:text="${session.user.createAt}"></div>
-            </div>
-
-
-
-            <div class="text-center">
-                <input type="hidden" name="userNo" th:value="${session.user.userNo}">
-                <button type="button" id="btn_modify" class="btn btn-secondary" onclick="submitForm()">개인정보수정</button>
-            </div>
-
-        </form>
-
+        <div class="col">
+        </div>
     </div>
+</div>
+
+
+
 
 <script th:inline="javascript">
 
-    function submitForm() {
-        document.getElementById('myForm').submit();
-    }
-
-    function submitForm() {
-        var form = document.getElementById("myForm");
-        form.submit();
-        alert("수정이 완료되었습니다.");
-    }
-
 </script>
 
-</div>
 
 <div th:replace="~{layout/footer::footer}"></div>
 </body>

@@ -10,6 +10,7 @@ import java.util.Objects;
 public interface UserMapper {
 
   public UserDto getUser(Map<String, Object> map);
+  public int getUserPlanCount();
   public int insertUser(UserDto user);
   public UserDto selectUser(int userNo);
   public int updateUser(UserDto user);

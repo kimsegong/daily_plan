@@ -37,9 +37,11 @@
                  </div>
              </div>
              <div class="col-9 text-right">
+                 <th:block th:if="${session.user == null}">
                  <div class="ml-auto mb-2">
                      <a th:href="@{/user/login.do}" style="font-size: 20px; display: inline-block;">로그인</a>
                  </div>
+                 </th:block>
                  <div class="ml-auto">
                      <a th:href="@{/plan/write.form}" style="font-size: 20px; display: inline-block;">일정작성</a>
                  </div>
@@ -48,7 +50,7 @@
                      <a th:href="@{/user/logout.do}" style="font-size: 20px; display: inline-block;">로그아웃</a>
                  </div>
                  <div class="ml-auto">
-                     <a th:href="@{/user/mypage.form}" style="font-size: 20px; display: inline-block;">마이페이지</a>
+                     <a th:href="@{/user/mypage.do}" style="font-size: 20px; display: inline-block;">마이페이지</a>
                  </div>
                  </th:block>
              </div>

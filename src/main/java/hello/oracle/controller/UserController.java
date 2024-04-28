@@ -52,13 +52,25 @@ public class UserController {
     return userService.checkEmail(userEmail);
   }
 
-  @GetMapping("/mypage.form")
-  public String mypageForm(Model model, @RequestParam(value="userNo", required=false, defaultValue="0") int userNo) {
+  @GetMapping(value ="/modifyUser.form")
+  public String userModify(Model model, @RequestParam(value="userNo", required=false, defaultValue="0") int userNo) {
     UserDto user = userService.getUserById(userNo);
+    int userPlanCount = userService.userPlanCount();
     model.addAttribute("user", user);
+    model.addAttribute("userPlanCount", userPlanCount);
+    return "user/modifyUser";
+  }
+
+  @GetMapping(value = "/mypage.do")
+  public String mypage(Model model, @RequestParam(value="userNo", required=false, defaultValue="0") int userNo) {
+    UserDto user = userService.getUserById(userNo);
+    int userPlanCount = userService.userPlanCount();
+    model.addAttribute("user", user);
+    model.addAttribute("userPlanCount", userPlanCount);
     return "user/mypage";
   }
-  @PostMapping("/mypage.form")
+
+  @PostMapping("/modifyUser.form")
   public void modifyUser(HttpServletRequest request){
     userService.modify(request);
 

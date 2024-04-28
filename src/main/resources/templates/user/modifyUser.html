@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{layout/header::head('Daily_Plan 마이페이지')}"></head>
+<body>
+<div th:replace="~{layout/header::header}"></div>
+
+
+<div class="main_wrap">
+    <div class="wrap wrap_7">
+
+        <p class="title">개인정보수정</p>
+
+        <form method="post" id="myForm" th:action="@{/user/mypage.form}">
+
+            <hr class="my-3">
+            <div class="row mb-2">
+                <label for="userName" class="col-sm-3 col-form-label">이름</label>
+                <div class="col-sm-9"><input type="text" th:value="${session.user.userName}" id="userName" name="userName" class="form-control"></div>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-9 mb-3" id="msg_name"></div>
+            </div>
+            <div class="row mb-2">
+                <label for="userEmail" class="col-sm-3 col-form-label">이메일</label>
+                <div class="col-sm-6" type="text" th:text="${session.user.userEmail}" id="userEmail"></div>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-9" id="msg_email"></div>
+            </div>
+            <div class="row mb-2" style="margin-top: 20px">
+                <label for="userPhone" class="col-sm-3 col-form-label">휴대폰번호</label>
+                <div class="col-sm-6"><input type="tel" th:value="${session.user.userPhone}" id="userPhone" name="userPhone" class="form-control"></div>
+            </div>
+
+            <hr class="my-3">
+
+            <div class="row mb-2">
+                <label for="userPw" class="col-sm-3 col-form-label">비밀번호</label>
+                <div class="col-sm-9"><input type="password" th:value="${session.user.userPw}" id="userPw" name="userPw" class="form-control"></div>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-9 mb-3" id="msg_pw"></div>
+            </div>
+
+            <div class="row mb-2">
+                <label for="userPw2" class="col-sm-3 col-form-label">비밀번호 확인</label>
+                <div class="col-sm-9"><input type="password" id="userPw2" class="form-control"></div>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-9 mb-3" id="msg_pw2"></div>
+            </div>
+
+            <hr class="my-3">
+
+            <div class="row mb-4">
+                <div class="col-sm-3">가입일</div>
+                <div class="col-sm-9" th:text="${session.user.createAt}"></div>
+            </div>
+
+
+
+            <div class="text-center">
+                <input type="hidden" name="userNo" th:value="${session.user.userNo}">
+                <button type="button" id="btn_modify" class="btn btn-secondary" onclick="submitForm()">개인정보수정</button>
+            </div>
+
+        </form>
+
+    </div>
+
+<script th:inline="javascript">
+
+    function submitForm() {
+        document.getElementById('myForm').submit();
+    }
+
+    function submitForm() {
+        var form = document.getElementById("myForm");
+        form.submit();
+        alert("수정이 완료되었습니다.");
+    }
+
+</script>
+
+</div>
+
+<div th:replace="~{layout/footer::footer}"></div>
+</body>
+</html>

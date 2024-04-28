@@ -1,7 +1,9 @@
 package hello.oracle.service;
 
 import hello.oracle.dao.PlanMapper;
+import hello.oracle.dao.UserMapper;
 import hello.oracle.dto.PlanDto;
+import hello.oracle.util.MyPageUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -12,12 +14,16 @@ import org.springframework.ui.Model;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class PlanServiceImpl implements PlanService{
 
     private final PlanMapper planMapper;
+    private final UserMapper userMapper;
+    private final MyPageUtils pageUtils;
+
     @Transactional(readOnly=true)
     @Override
     public List<PlanDto> getPlan(int userNo) throws Exception {
@@ -26,6 +32,27 @@ public class PlanServiceImpl implements PlanService{
         return planMapper.selectPlan(params);
 
     }
+
+    @Transactional(readOnly=true)
+    @Override
+    public Map<String, Object> getAllPlan(HttpServletRequest request ,int userNo){
+        Optional<String> opt = Optional.ofNullable(request.getParameter("page"));
+        int page = Integer.parseInt(opt.orElse("1"));
+        int total = userMapper.getUserPlanCount();
+        int display = 9;
+
+        pageUtils.setPaging(page, total, display);
+
+        Map<String, Object> map = Map.of("begin", pageUtils.getBegin()
+                , "end", pageUtils.getEnd()
+                , "userNo", userNo);
+
+        List<PlanDto> planList = planMapper.selectPlan(map);
+        return Map.of("planList", planList
+                , "totalPage", pageUtils.getTotalPage());
+
+    }
+
 
     @Override
     public void insertPlan(HttpServletRequest request) {

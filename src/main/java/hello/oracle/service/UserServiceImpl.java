@@ -60,6 +60,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public int userPlanCount() {
+        return userMapper.getUserPlanCount();
+    }
+
+
+    @Override
     public void logout(HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession session = request.getSession();
