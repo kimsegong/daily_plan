@@ -18,6 +18,14 @@
             <form method="post" id="frm_package_add" th:action="@{/plan/add.do}" onsubmit="return validateForm()">
                 <div style="margin: 30px 270px;" class="w-50 p-3">
                     <div>
+                        <label for="startAt" class="form-label">시작날짜/시간</label>
+                        <input type="datetime-local" name="startAt" id="startAt" class="form-control">
+                    </div>
+                    <div>
+                        <label for="endAt" class="form-label">끝날짜/시간</label>
+                        <input type="datetime-local" name="endAt" id="endAt" class="form-control">
+                    </div>
+                    <div>
                         <label for="firstPlan" class="form-label"></label>
                         <input type="text" name="firstPlan" id="firstPlan" class="form-control" placeholder="첫번째 일정">
                     </div>
@@ -40,14 +48,6 @@
                     <div>
                         <label for="thirdComment" class="form-label"></label>
                         <input type="text" id="thirdComment" name="thirdComment" class="form-control" placeholder="세번째 일정 세부내용">
-                    </div>
-                    <div>
-                        <label for="startAt" class="form-label">시작날짜/시간</label>
-                        <input type="datetime-local" name="startAt" id="startAt" class="form-control">
-                    </div>
-                    <div>
-                        <label for="endAt" class="form-label">끝날짜/시간</label>
-                        <input type="datetime-local" name="endAt" id="endAt" class="form-control">
                     </div>
 
                     <div class="d-grid gap-2 col-6 mx-auto">
@@ -74,6 +74,14 @@ function validateForm() {
     }
     return true; // 폼 제출 허용
 }
+
+$(document).ready(function() {
+    // 작성완료 버튼 클릭 이벤트 핸들러
+    $('.btn-kong').click(function() {
+        alert('작성이 완료되었습니다.');
+    });
+});
+
 </script>
 
 

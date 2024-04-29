@@ -70,24 +70,24 @@
             <div class="container" style="margin-bottom: 20px;">
                 <div>
                     <label for="userName"></label>
-                    <div th:text="${session.user.userName}" id="userName"></div>
+                    <div th:text="${session.user.userName}" id="userName">님의 Daily_Plan</div>
                 </div>
                 <div>
                     <label for="userEmail"></label>
                     <div th:text="${session.user.userEmail}" id="userEmail"></div>
                 </div>
             </div>
-            <span style="font-size:23px; color:#795458;" th:text="|${userPlanCount}개의 기록✏️|"></span>
+            <span th:text="|${userPlanCount}개의 기록✏️|"></span>
             <div th:if="${userPlanCount >= 10}" style="font-size:20px; color:green;">
                 잘하고 있군요😉
             </div>
-            <div th:if="${userPlanCount < 10}" style="font-size:20px; color:#D20062;">
-                좀 더 계획을 세워보세요🥲
+            <div th:if="${userPlanCount < 10}">
+                계획을 꾸준히 세워보세요🥲
             </div>
             <div class="container1">
                 <div class="box"><a th:href="@{/plan/allPlan.do(userNo=${session.user.userNo})}">나의 기록들</a></div>
                 <div class="box"><a th:href="@{/user/modifyUser.form}">내정보 수정</a></div>
-                <div class="box">Text 3</div>
+                <div class="box"><a>문의하기</a></div>
             </div>
         </div>
 

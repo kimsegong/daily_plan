@@ -11,6 +11,7 @@ import java.util.Map;
 @Mapper
 public interface PlanMapper {
     public List<PlanDto> selectPlan(Map<String, Object> map);
+    public PlanDto selectPlanModal(Map<String, Object> map);
     public int insertPlan(PlanDto plan);
     public int modifyPlan(PlanDto plan);
     public int deletePlan(int PlanNo);

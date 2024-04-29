@@ -20,7 +20,8 @@ public class WebInterceptConfig implements WebMvcConfigurer {
 
     // 로그인이 필요한 접근을 막는 인터셉터
     registry.addInterceptor(requiredLoginInterceptor)
-            .addPathPatterns("/user/mypage.form")
+            .addPathPatterns("/user/mypage.do")
+            .addPathPatterns("/user/modifyUser.form")
             .addPathPatterns("/plan/write.form");
 
   }

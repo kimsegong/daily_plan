@@ -35,7 +35,7 @@
         display: inline-block; /* 값이 라벨과 같은 줄에 표시 */
     }
     .dropdown {
-        display: inline-block; /* 드롭다운을 인라인 블록 요소로 만들어 정렬 가능하게 함 */
+        margin-left: 430px;
     }
     .dropdown-toggle {
         background: none;
@@ -44,7 +44,6 @@
 
     .dropdown-menu {
         position: absolute;
-        background-color: #FFF7FC; /* 배경색 하얗게 설정 */
         right: 0;
         z-index: 1000;
     }
@@ -54,6 +53,9 @@
         padding: 12px 16px;
         text-decoration: none;
         display: block;
+    }
+    .btn-secondary {
+        --bs-btn-color: black;
     }
 
 
@@ -76,6 +78,57 @@
                 <input type="hidden" id="userNo" th:value="${session.user.userNo}">
                 <div id="plan_list"></div>
             </div>
+            <div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editEventModalLabel">일정 수정</h5>
+                            <button type="button" class="btn-close btn-kong" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="editEventForm">
+                                <input type="hidden" id="planNo" name="planNo">
+                                <!-- 첫 번째 일정 세트 -->
+                                <div class="form-group">
+                                    <label for="firstPlan">첫번째 일정</label>
+                                    <input type="text" class="form-control" name="firstPlan" id="firstPlan">
+                                    <label for="firstComment">내용</label>
+                                    <input type="text" class="form-control" name="firstComment" id="firstComment">
+                                </div>
+
+                                <!-- 두 번째 일정 세트 -->
+                                <div class="form-group">
+                                    <label for="secondPlan">두번째일정</label>
+                                    <input type="text" class="form-control" name="secondPlan" id="secondPlan">
+                                    <label for="secondComment">내용</label>
+                                    <input type="text" class="form-control" name="secondComment" id="secondComment">
+                                </div>
+
+                                <!-- 세 번째 일정 세트 -->
+                                <div class="form-group">
+                                    <label for="thirdPlan">세번째일정</label>
+                                    <input type="text" class="form-control" name="thirdPlan" id="thirdPlan">
+                                    <label for="thirdComment">내용</label>
+                                    <input type="text" class="form-control" name="thirdComment" id="thirdComment">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="startAt">시작 날짜</label>
+                                    <input type="datetime-local" name="startAt"  class="form-control" id="startAt">
+                                </div>
+                                <div>
+                                    <label for="endAt" class="form-label">끝날짜/시간</label>
+                                    <input type="datetime-local" name="endAt"  id="endAt" class="form-control">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-kong" id="edit_btn">저장</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <div class="col-1">
         </div>
@@ -117,7 +170,7 @@
                         str +='<div class="dropdown">'
                         str +='<a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">' + '...' + '</a>'
                         str +=' <ul class="dropdown-menu">'
-                        str +='<li><a class="dropdown-item" th:href="@{/layout/modify.do}">수정</a></li>'
+                        str += '<li><a class="dropdown-item" href="#" onclick="openEditModal(' + plan.planNo + '); return false;">수정</a></li>';
                         str += '<li><div class="delete-btn" data-plan-no="' + plan.planNo + '"><a class="dropdown-item">삭제</a></div></li>'
                         str +='</ul>'
                         str +='</div>'
@@ -146,6 +199,64 @@
 
     fnGetPlanList();
 
+
+    function openEditModal(planNo) {
+        // 모달에 플랜 번호 설정
+        $('#editEventModal #planNo').val(planNo);
+        $.ajax({
+            url: '/layout/selectPlanModal.do',
+            type: 'GET',
+            data: { planNo: planNo,
+                    userNo: userNo
+            },
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+                $('#firstPlan').val(data.firstPlan);
+                $('#firstComment').val(data.firstComment);
+                $('#secondPlan').val(data.secondPlan);
+                $('#secondComment').val(data.secondComment);
+                $('#thirdPlan').val(data.thirdPlan);
+                $('#thirdComment').val(data.thirdComment);
+                $('#startAt').val(data.startAt);
+                $('#endAt').val(data.endAt);
+
+                // 모달 표시
+                $('#editEventModal').modal('show');
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr, status, error);
+                alert('일정 상세 정보를 불러오는 데 실패했습니다.');
+            }
+        });
+    }
+    const fnModify = () => {
+        $(document).ready(function() {
+            $(document).on('click', '#edit_btn', function() {
+        $.ajax({
+            type: 'POST',
+            url: '/layout/modify.do',
+            data: $('#editEventForm').serialize(),
+            dataType: 'json',
+            success: function (response) {
+                if (response.modifyResult === 1) {
+                    alert('수정이 완료되었습니다.');
+                } else {
+                    alert('수정 실패');
+                }
+                $('#editEventModal').modal('hide');
+            },
+            error: function () {
+                alert('서버 오류 발생');
+                $('#editEventModal').modal('hide');
+            }
+        });
+            });
+        })
+    }
+
+
+
     $(document).ready(function() {
         $(document).on('click', '.delete-btn', function() {
             var planNo = $(this).data('plan-no'); // data-plan-no 속성을 읽어옵니다.
@@ -171,6 +282,7 @@
         });
     });
 
+    fnModify();
 
 
 </script>

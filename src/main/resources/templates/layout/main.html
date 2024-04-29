@@ -31,6 +31,7 @@
       color: #795458;
    }
 
+
 </style>
 <body>
 
@@ -47,13 +48,10 @@
                   <a class="nav-link active" aria-current="page" href="/">Calendar🗓️</a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="/">지도?</a>
+                  <a class="nav-link" th:href="@{/kakaoMap/mapMain.do}">Map🗺️</a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="#">설정</a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link disabled" aria-disabled="true">❤️🩷💙🩵💜</a>
+                  <a class="nav-link disabled" aria-disabled="true">❤️🩷💙🩵</a>
                </li>
             </ul>
          </div>
@@ -73,7 +71,6 @@
             <div class="modal-body">
                <form id="editEventForm">
                   <input type="hidden" id="planNo" name="planNo">
-
                   <!-- 첫 번째 일정 세트 -->
                   <div class="form-group">
                      <label for="firstPlan">첫번째 일정</label>
@@ -149,22 +146,30 @@
                        })
                        .then(response => response.json())
                        .then(data => {
-                          var events = data.map(plan => ({
-                             id: plan.planNo,
-                             title: [plan.firstPlan, plan.secondPlan, plan.thirdPlan].filter(Boolean),
-                             start: new Date(plan.startAt.replace(' ', 'T')),
-                             end: new Date(plan.endAt.replace(' ', 'T')),
-                             extendedProps: {
-                                planNo: plan.planNo,
-                                details: [plan.firstComment, plan.secondComment, plan.thirdComment].filter(Boolean),
-                                firstPlan: plan.firstPlan,
-                                firstComment: plan.firstComment,
-                                secondPlan: plan.secondPlan,
-                                secondComment: plan.secondComment,
-                                thirdPlan: plan.thirdPlan,
-                                thirdComment: plan.thirdComment
-                             }
-                          }));
+                          var events = data.map(plan => {
+                             // 연속된 날짜인지 확인
+                             let startDate = new Date(plan.startAt.replace(' ', 'T'));
+                             let endDate = new Date(plan.endAt.replace(' ', 'T'));
+                             let isContinuous = endDate > startDate; // 종료 날짜가 시작 날짜보다 큰 경우
+
+                             return {
+                                id: plan.planNo,
+                                title: [plan.firstPlan, plan.secondPlan, plan.thirdPlan].filter(Boolean).join(", "),
+                                start: startDate,
+                                end: endDate,
+                                color: isContinuous ? '#E8DFCA' : '#B5C18E', // 연속된 날짜면 빨간계열, 아니면 파란계열 색상
+                                extendedProps: {
+                                   planNo: plan.planNo,
+                                   details: [plan.firstComment, plan.secondComment, plan.thirdComment].filter(Boolean).join(", "),
+                                   firstPlan: plan.firstPlan,
+                                   firstComment: plan.firstComment,
+                                   secondPlan: plan.secondPlan,
+                                   secondComment: plan.secondComment,
+                                   thirdPlan: plan.thirdPlan,
+                                   thirdComment: plan.thirdComment
+                                }
+                             };
+                          });
                           successCallback(events);
                        })
                        .catch(error => {
@@ -233,7 +238,7 @@
                   data: $('#editEventForm').serialize(),
                   success: function(response) {
                      if (response.modifyResult === 1) {
-                        alert('수정 완료');
+                        alert('수정이 완료되었습니다.');
                         calendar.refetchEvents(); // 캘린더 이벤트를 다시 불러옴
                      } else {
                         alert('수정 실패');

@@ -7,15 +7,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +27,24 @@ public class MainController {
     @GetMapping(value={"/", "/layout/main.do"})
     public String main(){
         return "layout/main";
+    }
+
+
+    // 마이페이지에서 수정
+    @ResponseBody                        
+    @GetMapping(value="/layout/selectPlanModal.do", produces ="application/json")
+    public ResponseEntity<PlanDto> selectPlanModal(@RequestParam(value="userNo", required=false, defaultValue="0") int userNo,
+                                                  @RequestParam(value="planNo", required=false, defaultValue="0") int planNo) {
+        try {
+            PlanDto plan = planService.getPlanModal(userNo, planNo); // 결과를 PlanDto 객체로 가정
+            if (plan != null) {
+                return ResponseEntity.ok(plan); // 성공적으로 데이터를 찾은 경우
+            } else {
+                return ResponseEntity.notFound().build(); // 데이터를 찾지 못한 경우
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 

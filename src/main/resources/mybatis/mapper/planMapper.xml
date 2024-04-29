@@ -26,6 +26,12 @@
          WHERE USER_NO = #{userNo, jdbcType=INTEGER}
     </select>
 
+    <select id="selectPlanModal" resultType="PlanDto">
+        SELECT PLAN_NO, START_AT, END_AT, INSERT_AT, UPDATE_AT, FIRST_PLAN, FIRST_COMMENT, SECOND_PLAN, SECOND_COMMENT, THIRD_PLAN, THIRD_COMMENT
+        FROM PLAN_T
+        WHERE USER_NO = #{userNo, jdbcType=INTEGER} AND PLAN_NO = #{planNo, jdbcType=INTEGER}
+    </select>
+
 
 
     <insert id="insertPlan" parameterType="PlanDto">

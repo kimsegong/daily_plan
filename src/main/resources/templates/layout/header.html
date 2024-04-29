@@ -18,7 +18,6 @@
 <link rel="stylesheet" th:href="@{/css/common.css(ver=1.0)}" />
 <link rel="stylesheet" th:href="@{/css/ckeditor.css(ver=1.0)}" />
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-
 </head>
 <style>
 
@@ -35,21 +34,21 @@
                      </a>
                  </div>
              </div>
-             <div class="col-9 text-right">
+             <div class="col-9 position-relative" >
                  <th:block th:if="${session.user == null}">
-                 <div class="ml-auto mb-2">
-                     <a th:href="@{/user/login.do}" style="font-size: 20px; display: inline-block;">로그인</a>
+                 <div >
+                     <a th:href="@{/user/login.do}" class="position-absolute top-50 end-0 translate-middle-y">로그인</a>
                  </div>
                  </th:block>
-                 <div class="ml-auto">
-                     <a th:href="@{/plan/write.form}" style="font-size: 20px; display: inline-block;">일정작성</a>
+                 <div>
+                     <a th:href="@{/plan/write.form}" class="position-absolute top-0 end-0" style="margin-top: 45px;">일정작성</a>
                  </div>
                  <th:block th:if="${session.user != null}">
-                 <div class="ml-auto mb-2">
-                     <a th:href="@{/user/logout.do}" style="font-size: 20px; display: inline-block;">로그아웃</a>
+                 <div id="stop" style="margin-bottom: 40px;">
+                     <a style="font-size: 15px; display: inline-block; margin-bottom: 10px;" class="position-absolute top-50 end-0 translate-middle-y">로그아웃</a>
                  </div>
-                 <div class="ml-auto">
-                     <a th:href="@{/user/mypage.do}" style="font-size: 20px; display: inline-block;">마이페이지</a>
+                 <div>
+                     <a th:href="@{/user/mypage.do}" class="position-absolute bottom-0 end-0" style="margin-top: 30px;">마이페이지</a>
                  </div>
                  </th:block>
              </div>
@@ -65,6 +64,30 @@
 
          </div>
      </nav>
+
+     <script th:inline="javascript">
+         $(document).ready(function() {
+             $(document).on('click', '#stop', function() {
+                 if (confirm("로그아웃 하시겠습니까?")) {
+                     // AJAX 요청을 통해 서버에 로그아웃 요청
+                     $.ajax({
+                         url: '/user/logout.do',  // 로그아웃 처리 URL
+                         type: 'GET',  // 보안을 위해 POST 요청 사용
+                         success: function(response) {
+                             alert('성공적으로 로그아웃 되었습니다.');
+                             // 로그아웃 성공 후 리다이렉트할 페이지 URL
+                             window.location.href = '/layout/main.do';
+                         },
+                         error: function() {
+                             alert('로그아웃 실패. 다시 시도해 주세요.');
+                         }
+                     });
+                 }
+             });
+         });
+
+
+     </script>
 
  </div>
  </div>

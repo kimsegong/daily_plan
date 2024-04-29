@@ -33,6 +33,14 @@ public class PlanServiceImpl implements PlanService{
 
     }
 
+    @Override
+    public PlanDto getPlanModal(int userNo, int planNo) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("userNo", userNo);
+        params.put("planNo", planNo);
+        return planMapper.selectPlanModal(params);
+    }
+
     @Transactional(readOnly=true)
     @Override
     public Map<String, Object> getAllPlan(HttpServletRequest request ,int userNo){
