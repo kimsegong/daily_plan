@@ -26,10 +26,51 @@
    .btn-kong {
       background-color: #EAD8C0;
    }
-   .nav-link {
-      font-size: large;
+   .large {
+      font-size: larger;
       color: #795458;
    }
+   .disabled {
+      font-size: smaller;
+      color: #ED9455;
+   }
+
+   .tooltip-text {
+      visibility: visible;
+      width: 160px;
+      background-color: #F6E9B2;
+      color: #0A6847;
+      font-size: 13px;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px 0;
+
+      /* 위치 설정 */
+      position: absolute;
+      z-index: 1;
+      top: 50%;  /* 부모 요소의 중간 높이에 위치 */
+      left: 30%; /* 왼쪽에서부터의 거리 */
+      transform: translateY(-50%); /* Y축 기준 중앙 정렬 */
+      white-space: nowrap;
+
+      /* 화살표 추가 */
+      &:after {
+         content: "";
+         position: absolute;
+         top: 50%;
+         right: 100%; /* 말풍선 오른쪽에 화살표를 위치시킴 */
+         margin-top: -5px;
+         border-width: 5px;
+         border-style: solid;
+         border-color: transparent #F6E9B2 transparent transparent;
+         transform: translateY(-50%);
+
+         animation: blink-animation 1s infinite;
+      }
+
+   }
+
+
 
 
 </style>
@@ -45,13 +86,22 @@
             </th:block>
             <ul class="nav flex-column">
                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="/">Calendar🗓️</a>
+                  <a class="nav-link active large" aria-current="page" href="/">Calendar🗓️</a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" th:href="@{/kakaoMap/mapMain.do}">Map🗺️</a>
+                  <a class="nav-link large" th:href="@{/kakaoMap/mapMain.do}">
+                     Map🗺️
+                     <span class="tooltip-text">약속장소를 확인해보세요!</span>
+                  </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link disabled" aria-disabled="true">❤️🩷💙🩵</a>
+                  <a class="nav-link disabled" aria-disabled="true"></a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link disabled" aria-disabled="true"></a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link disabled" aria-disabled="true">문의하기</a>
                </li>
             </ul>
          </div>
@@ -282,7 +332,6 @@
             }
          });
       });
-
 
    </script>
 

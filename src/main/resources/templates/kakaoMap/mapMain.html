@@ -2,7 +2,51 @@
 <html lang="en">
 <head th:replace="~{layout/header::head('지도')}"></head>
 <style>
+    .btn-kong {
+        background-color: #EAD8C0;
+    }
+    .large {
+        font-size: larger;
+        color: #795458;
+    }
+    .disabled {
+        font-size: smaller;
+        color: #ED9455;
+    }
+    .tooltip-text {
+        visibility: visible;
+        width: 160px;
+        background-color: #F6E9B2;
+        color: #0A6847;
+        font-size: 13px;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
 
+        /* 위치 설정 */
+        position: absolute;
+        z-index: 1;
+        top: 50%; /* 부모 요소의 중간 높이에 위치 */
+        left: 30%; /* 왼쪽에서부터의 거리 */
+        transform: translateY(-50%); /* Y축 기준 중앙 정렬 */
+        white-space: nowrap;
+
+        /* 화살표 추가 */
+
+        &:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 100%; /* 말풍선 오른쪽에 화살표를 위치시킴 */
+            margin-top: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent #F6E9B2 transparent transparent;
+            transform: translateY(-50%);
+
+            animation: blink-animation 1s infinite;
+        }
+    }
 </style>
 <body>
 
@@ -15,26 +59,35 @@
             </th:block>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Calendar🗓️</a>
+                    <a class="nav-link active large" aria-current="page" href="/">Calendar🗓️</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/kakaoMap/mapMain.do}">Map🗺️</a>
+                    <a class="nav-link large" th:href="@{/kakaoMap/mapMain.do}">
+                        Map🗺️
+                        <span class="tooltip-text">약속장소를 확인해보세요!</span>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" aria-disabled="true">❤️🩷💙🩵</a>
+                    <a class="nav-link disabled" aria-disabled="true"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" aria-disabled="true"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" aria-disabled="true">문의하기</a>
                 </li>
             </ul>
         </div>
         <div class="col-md-9">
             <div class="map_wrap">
-                <div id="map" style="width:500px; height:500px; position:relative; overflow:hidden;"></div>
+                <div id="map" style="width:900px; height:500px; margin-bottom: 10px; position:relative; overflow:hidden;"></div>
 
                 <div id="menu_wrap" class="bg_white">
                     <div class="option">
                         <div>
                             <form onsubmit="searchPlaces(); return false;">
                                 키워드 : <input type="text" value="잠실 맛집" id="keyword" size="15">
-                                <button type="submit">검색하기</button>
+                                <button class="btn btn-kong" type="submit">검색하기</button>
                             </form>
                         </div>
                     </div>
@@ -58,7 +111,7 @@
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {
             center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-            level: 3 // 지도의 확대 레벨
+            level: 7 // 지도의 확대 레벨
         };
 
     // 지도를 생성합니다
