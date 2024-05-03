@@ -46,7 +46,7 @@ public class PlanServiceImpl implements PlanService{
     public Map<String, Object> getAllPlan(HttpServletRequest request ,int userNo){
         Optional<String> opt = Optional.ofNullable(request.getParameter("page"));
         int page = Integer.parseInt(opt.orElse("1"));
-        int total = userMapper.getUserPlanCount();
+        int total = userMapper.getUserPlanCount(userNo);
         int display = 9;
 
         pageUtils.setPaging(page, total, display);

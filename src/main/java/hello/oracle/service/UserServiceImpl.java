@@ -60,8 +60,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public int userPlanCount() {
-        return userMapper.getUserPlanCount();
+    public int userPlanCount(int userNo) {
+        return userMapper.getUserPlanCount(userNo);
     }
 
 

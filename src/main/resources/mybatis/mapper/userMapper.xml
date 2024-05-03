@@ -32,6 +32,7 @@
   <select id="getUserPlanCount" resultType="int">
     SELECT COUNT(*)
       FROM PLAN_T
+     WHERE USER_NO = #{userNo, jdbcType=INTEGER}
   </select>
 
   <select id="selectUser" parameterType="Map" resultType="UserDto">

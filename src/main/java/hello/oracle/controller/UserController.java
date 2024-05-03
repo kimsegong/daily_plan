@@ -55,16 +55,14 @@ public class UserController {
   @GetMapping(value ="/modifyUser.form")
   public String userModify(Model model, @RequestParam(value="userNo", required=false, defaultValue="0") int userNo) {
     UserDto user = userService.getUserById(userNo);
-    int userPlanCount = userService.userPlanCount();
     model.addAttribute("user", user);
-    model.addAttribute("userPlanCount", userPlanCount);
     return "user/modifyUser";
   }
 
   @GetMapping(value = "/mypage.do")
   public String mypage(Model model, @RequestParam(value="userNo", required=false, defaultValue="0") int userNo) {
     UserDto user = userService.getUserById(userNo);
-    int userPlanCount = userService.userPlanCount();
+    int userPlanCount = userService.userPlanCount(userNo);
     model.addAttribute("user", user);
     model.addAttribute("userPlanCount", userPlanCount);
     return "user/mypage";
